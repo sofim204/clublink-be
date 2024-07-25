@@ -1,0 +1,5 @@
+[
+  "<script src=\"{{base_url}}skin/lp3/js/jquery-1.12.4.min.js\"><\/script>",
+  "<script src=\"{{base_url}}skin/lp3/js/bootstrap.min.js\"><\/script>",
+  "<script src=\"{{base_url}}skin/lp3/js/app.js\"><\/script>"
+]

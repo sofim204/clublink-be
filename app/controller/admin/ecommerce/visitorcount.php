@@ -1,0 +1,231 @@
+<?php
+class Visitorcount extends JI_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setTheme('admin');
+        $this->current_parent = 'ecommerce';
+        $this->current_page = 'ecommerce_visitorcount';
+        $this->load("admin/f_visitor_model", "fvm_model");
+        // $this->load("admin/d_order_model", "dom");
+        // $this->load("admin/d_order_detail_model", "dodm");
+        // $this->load("admin/d_order_detail_item_model", "dodim");
+    }
+
+    // private function __forceDownload($pathFile)
+    // {
+    //     header('Content-Description: File Transfer');
+    //     header('Content-Type: application/octet-stream');
+    //     header('Content-Disposition: attachment; filename='.basename($pathFile));
+    //     header('Content-Transfer-Encoding: binary');
+    //     header('Expires: 0');
+    //     header('Cache-Control: must-revalidate');
+    //     header('Pragma: public');
+    //     header('Content-Length: ' . filesize($pathFile));
+    //     ob_clean();
+    //     flush();
+    //     readfile($pathFile);
+    //     exit;
+    // }
+
+    // private function __checkDir($periode)
+    // {
+    //     if (!is_dir(SENEROOT.'media/')) {
+    //         mkdir(SENEROOT.'media/', 0777);
+    //     }
+    //     if (!is_dir(SENEROOT.'media/laporan/')) {
+    //         mkdir(SENEROOT.'media/laporan/', 0777);
+    //     }
+    //     $str = $periode.'/01';
+    //     $periode_y = date("Y", strtotime($str));
+    //     $periode_m = date("m", strtotime($str));
+    //     if (!is_dir(SENEROOT.'media/laporan/'.$periode_y)) {
+    //         mkdir(SENEROOT.'media/laporan/'.$periode_y, 0777);
+    //     }
+    //     if (!is_dir(SENEROOT.'media/laporan/'.$periode_y.'/'.$periode_m)) {
+    //         mkdir(SENEROOT.'media/laporan/'.$periode_y.'/'.$periode_m, 0777);
+    //     }
+    //     return SENEROOT.'media/laporan/'.$periode_y.'/'.$periode_m;
+    // }
+
+    private function __forceDownload($pathFile)
+    {
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename='.basename($pathFile));
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($pathFile));
+        ob_clean();
+        flush();
+        readfile($pathFile);
+        exit;
+    }
+
+    private function __checkDir($periode)
+    {
+        if (!is_dir(SENEROOT.'media/')) {
+            mkdir(SENEROOT.'media/', 0777);
+        }
+        if (!is_dir(SENEROOT.'media/laporan/')) {
+            mkdir(SENEROOT.'media/laporan/', 0777);
+        }
+        $str = $periode.'/01';
+        $periode_y = date("Y", strtotime($str));
+        $periode_m = date("m", strtotime($str));
+        if (!is_dir(SENEROOT.'media/laporan/'.$periode_y)) {
+            mkdir(SENEROOT.'media/laporan/'.$periode_y, 0777);
+        }
+        if (!is_dir(SENEROOT.'media/laporan/'.$periode_y.'/'.$periode_m)) {
+            mkdir(SENEROOT.'media/laporan/'.$periode_y.'/'.$periode_m, 0777);
+        }
+        return SENEROOT.'media/laporan/'.$periode_y.'/'.$periode_m;
+    }
+
+
+    public function index()
+    {
+        $data = $this->__init();
+        if (!$this->admin_login) {
+            redir(base_url_admin('login'));
+            die();
+        }
+
+        if (!$this->checkPermissionAdmin($this->current_page)) {
+            redir(base_url_admin('forbidden'));
+            die();
+        }
+        
+        //get initial filtering data
+        $data['keyword'] = strip_tags($this->input->get("keyword"));
+        if (empty($data['keyword'])) {
+            $data['keyword'] = "";
+        }
+		$data['user_role'] = $data['sess']->admin->user_role;
+
+        $this->setTitle('Visitor Count'.$this->site_suffix_admin);
+        
+        $this->putThemeContent("ecommerce/visitorcount/home_modal", $data);
+        $this->putThemeContent("ecommerce/visitorcount/home", $data);
+
+        $this->putJsContent("ecommerce/visitorcount/home_bottom", $data);
+        $this->loadLayout('col-2-left', $data);
+        $this->render();
+    }
+
+    public function download_xls() {
+        $data = $this->__init();
+
+        if(!$this->admin_login){
+            redir(base_url_admin('login'));
+            die();
+        }
+        $nation_code = $data['sess']->admin->nation_code;
+        $keyword = '';
+        $cdate_start = $this->input->get("cdate_start");
+        $cdate_end = $this->input->get("cdate_end");
+        $mobile_type = $this->input->get("mobile_type");
+
+        $ddata = $this->fvm_model->exportXlsVisitorTotal($nation_code, $keyword, $cdate_start, $cdate_end, $mobile_type);
+
+        //loading library xls
+        $this->lib('phpexcel/PHPExcel','','inc');
+        $this->lib('phpexcel/PHPExcel/Writer/Excel2007','','inc');
+
+        //preset array column
+        $phpexcel_money = '_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)';
+        $judul_pertama_sty = array(
+            'font'  => array(
+                'bold'  => true,
+                'size'  => 12,
+                'name'  => 'Arial'
+            )
+        );
+        $style = array('horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $styleborder = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN
+                )
+            )
+        );
+
+        //create object xls
+        $objPHPExcel = new PHPExcel();
+
+        //===report sheet===//
+        $objWorkSheet = $objPHPExcel->setActiveSheetIndex(0);
+
+        $objWorkSheet->getColumnDimension('A')->setAutoSize(false);
+        $objWorkSheet->getColumnDimension('B')->setAutoSize(false);
+        $objWorkSheet->getColumnDimension('C')->setAutoSize(false);
+        $objWorkSheet->getColumnDimension('D')->setAutoSize(false);
+        $objWorkSheet->getColumnDimension('A')->setWidth(14);
+        $objWorkSheet->getColumnDimension('B')->setWidth(20);
+        $objWorkSheet->getColumnDimension('C')->setWidth(30);
+        $objWorkSheet->getColumnDimension('D')->setWidth(30);
+
+        //header
+        $objWorkSheet
+        ->setCellValue('A1', 'No.')
+        ->setCellValue('B1', 'Date')
+        ->setCellValue('C1', 'Mobile Type')
+        ->setCellValue('D1', 'Total Visit')
+        ->setCellValue('E1', 'Daily Visitor Count')
+        ->setCellValue('F1', 'Sign Up / Login')
+        ;
+
+        //styling for header
+        $objWorkSheet->getStyle('A1')->applyFromArray($styleborder)->getAlignment()->applyFromArray($style);
+        $objWorkSheet->getStyle('B1')->applyFromArray($styleborder)->getAlignment()->applyFromArray($style);
+        $objWorkSheet->getStyle('C1')->applyFromArray($styleborder)->getAlignment()->applyFromArray($style);
+        $objWorkSheet->getStyle('D1')->applyFromArray($styleborder)->getAlignment()->applyFromArray($style);
+        $objWorkSheet->getStyle('E1')->applyFromArray($styleborder)->getAlignment()->applyFromArray($style);
+        $objWorkSheet->getStyle('F1')->applyFromArray($styleborder)->getAlignment()->applyFromArray($style);
+
+        $i=2;
+        $dot=".";
+        $nomor = 1;
+        if(count($ddata)>0){
+            foreach($ddata as $pb){
+                //fill data to cell
+                $objWorkSheet->setCellValue('A'.$i, $nomor);
+                $objWorkSheet->setCellValue('B'.$i, $pb->cdate);
+                $objWorkSheet->setCellValue('C'.$i, $pb->mobile_type);
+                $objWorkSheet->setCellValue('D'.$i, $pb->visitor_count_from_ud_id);
+                $objWorkSheet->setCellValue('E'.$i, $pb->visitor_count);
+                $objWorkSheet->setCellValue('F'.$i, $pb->total_visit);
+
+                //set border to each column
+                $objWorkSheet->getStyle('A'.$i)->applyFromArray($styleborder);
+                $objWorkSheet->getStyle('B'.$i)->applyFromArray($styleborder);
+                $objWorkSheet->getStyle('C'.$i)->applyFromArray($styleborder);
+                $objWorkSheet->getStyle('D'.$i)->applyFromArray($styleborder);
+                $objWorkSheet->getStyle('E'.$i)->applyFromArray($styleborder);
+                $objWorkSheet->getStyle('F'.$i)->applyFromArray($styleborder);
+
+                $nomor++;
+                $i++;
+            }
+        } else {
+            $objWorkSheet->setCellValue('A'.$i,'Empty result')->mergeCells('A'.$i.':F'.$i.'');
+            $objWorkSheet->getStyle('A'.$i.':F'.$i.'')->getAlignment()->applyFromArray($style);
+            $objWorkSheet->getStyle('A'.$i.':F'.$i.'')->applyFromArray($styleborder);
+        }
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        //save file
+        $save_dir = $this->__checkDir(date("Y/m"));
+        $save_file = 'report_visitor-'.date("Y-m-d");
+        $save_file = str_replace(' ','',str_replace('/','',$save_file));
+
+        $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+        if(file_exists($save_dir.'/'.$save_file.'.xlsx')) unlink($save_dir.'/'.$save_file.'.xlsx');
+        $objWriter->save($save_dir.'/'.$save_file.'.xlsx');
+
+        $this->__forceDownload($save_dir.'/'.$save_file.'.xlsx');
+    }
+}

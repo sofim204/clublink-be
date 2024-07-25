@@ -1,0 +1,9 @@
+[
+	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/front/css/bootstrap.min.css\" \/>",
+	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/front/css/plugins.css\" \/>",
+	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/front/css/main.css\" \/>",
+	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/front/css/style.css\" \/>",
+	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/front/css/themes/autumn.css\" \/>",
+	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/front/css/themes/calysta.css\" \/>",
+	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/front/css/themes.css\" \/>"
+]

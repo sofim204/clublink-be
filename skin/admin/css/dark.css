@@ -1,0 +1,11 @@
+@media (prefers-color-scheme: dark) {
+    body {
+        text-transform: none!important; 
+        font-family: 'Poppins'; 
+        color:#000000;
+        background-color: #F2EEEB !important;
+        background-color: rgb(248, 243, 242) !important;
+        background-color: rgba(248, 243, 242, 0.9) !important;
+        /* background-color: transparent !important; */
+    }
+}

@@ -1,0 +1,113 @@
+@keyframes pulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-transform: scale(0.95);
+        opacity: 0.7;
+    }
+    50% {
+        -webkit-transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(0.95);
+        opacity: 0.7;
+    }
+}
+.animation-pulse {
+	animation-name: pulse;
+    -webkit-animation-name: pulse;
+    animation-duration: 1.5s;
+    -webkit-animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+}
+body {
+  background: #f5f5f5;
+}
+footer.row {
+	margin-top: 2em;
+  background: #333333;
+	max-width: 100%;
+	color: #ededed;
+	text-align: center;
+}
+footer.row p {
+	margin-top: 1em;
+}
+.text-center {
+	text-align: center;
+}
+.hidden {
+  display: none;
+}
+.card-product {
+	padding: 0.5em;
+	border: 1px #cdcdcd solid;
+	margin-bottom: 1em;
+	background-color: #fff;
+}
+.card-product-hover:hover,.card-product:focus {
+	border: 1px #e4002b solid;
+}
+
+h3.card-product-name  {
+  color: #ffffff;
+}
+.accordion .content {
+  padding: 0.9375rem 0rem;
+}
+.accordion dd > a {
+  border: 1px solid white;
+}
+#panel1b img{
+  min-width: 100%;
+  border: 1px solid #dcd7d7;
+}
+.top-bar {
+	background: #e4002b;
+}
+.top-bar-section ul li, .top-bar-section li:not(.has-form) a:not(.button) {
+	background: transparent;
+}
+.container {
+	margin-top: 2em;
+	min-height: 100vh;
+}
+#error-container h1 {
+	font-size: 96px;
+}
+#error-container h2 {
+	font-size: 24px;
+}
+.text-warning, .text-warning:hover, a.text-warning, a.text-warning:hover, a.text-warning:focus {
+  color: #e67e22;
+}
+.input-error {
+	border: 1px #9f0000 solid;
+}
+.morepadding05 {
+	padding: 0.5em;
+}
+.morepadding1 {
+	padding: 1em;
+}
+.marginbottom05 {
+	margin-bottom: 0.5em;
+}
+.marginbottom1 {
+	margin-bottom: 1em;
+}

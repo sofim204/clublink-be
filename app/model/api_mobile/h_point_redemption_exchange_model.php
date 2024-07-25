@@ -1,0 +1,219 @@
+<?php
+class H_Point_Redemption_Exchange_Model extends JI_Model
+{
+    public $tbl = 'h_point_redemption_exchange';
+    public $tbl_as = 'hpre';
+    // public $tbl2 = 'b_user';
+    // public $tbl2_as = 'bu';
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->db->from($this->tbl, $this->tbl_as);
+    }
+
+    // private function __joinTbl2()
+    // {
+    //     $composites = array();
+    //     $composites[] = $this->db->composite_create("$this->tbl_as.nation_code", "=", "$this->tbl2_as.nation_code");
+    //     $composites[] = $this->db->composite_create("$this->tbl_as.b_user_id", "=", "$this->tbl2_as.id");
+    //     return $composites;
+    // }
+
+    public function getTblAs()
+    {
+        return $this->tbl_as;
+    }
+
+    public function set($di)
+    {
+        if (!is_array($di)) {
+            return 0;
+        }
+        if (isset($di['telp'])) {
+            if (strlen($di['telp'])) {
+                $di['telp'] = $this->__encrypt($di['telp']);
+            }
+        }
+        return $this->db->insert($this->tbl, $di, 0, 0);
+    }
+
+    // public function update($nation_code, $b_user_id, $id, $kelurahan="All", $kecamatan="All", $kabkota="All", $provinsi="All", $du)
+    // {
+    //     if (!is_array($du)) {
+    //         return 0;
+    //     }
+    //     $this->db->where_as('nation_code', $this->db->esc($nation_code));
+    //     $this->db->where('b_user_id', $b_user_id);
+    //     $this->db->where('id', $id);
+    //     $this->db->where_as("LOWER(b_user_alamat_location_kelurahan)", $this->db->esc(strtolower($kelurahan)));
+    //     $this->db->where_as("LOWER(b_user_alamat_location_kecamatan)", $this->db->esc(strtolower($kecamatan)));
+    //     $this->db->where_as("LOWER(b_user_alamat_location_kabkota)", $this->db->esc(strtolower($kabkota)));
+    //     $this->db->where_as("LOWER(b_user_alamat_location_provinsi)", $this->db->esc(strtolower($provinsi)));
+    //     return $this->db->update($this->tbl, $du, 0);
+    // }
+
+    public function del($nation_code, $id, $b_user_id)
+    {
+        $this->db->where_as("nation_code", $this->db->esc($nation_code));
+        $this->db->where_as("id", $this->db->esc($id));
+        $this->db->where_as("b_user_id", $this->db->esc($b_user_id));
+        $this->db->where_as("is_active", $this->db->esc(1));
+        return $this->db->delete($this->tbl);
+    }
+
+    // public function countAll($nation_code, $kelurahan="", $kecamatan="", $kabkota="", $provinsi="", $b_user_id, $plusorminus, $custom_id="", $custom_type, $custom_type_sub, $dateCompare, $typeDateCompare)
+    // {
+    //     $this->db->select_as("COUNT(*)", "total", 0);
+        
+    //     $this->db->from($this->tbl, $this->tbl_as);
+        
+    //     $this->db->where_as("$this->tbl_as.nation_code", $this->db->esc($nation_code));
+        
+    //     if($kelurahan != ""){
+    //         $this->db->where_as("LOWER($this->tbl_as.b_user_alamat_location_kelurahan)", $this->db->esc(strtolower($kelurahan)));
+    //         $this->db->where_as("LOWER($this->tbl_as.b_user_alamat_location_kecamatan)", $this->db->esc(strtolower($kecamatan)));
+    //         $this->db->where_as("LOWER($this->tbl_as.b_user_alamat_location_kabkota)", $this->db->esc(strtolower($kabkota)));
+    //         $this->db->where_as("LOWER($this->tbl_as.b_user_alamat_location_provinsi)", $this->db->esc(strtolower($provinsi)));
+    //     }
+
+    //     $this->db->where_as("$this->tbl_as.b_user_id", $this->db->esc($b_user_id));
+
+    //     if($custom_id != ""){
+    //         $this->db->where_as("$this->tbl_as.custom_id", $this->db->esc($custom_id));
+    //     }
+
+    //     $this->db->where_as("$this->tbl_as.plusorminus", $this->db->esc($plusorminus));
+    //     $this->db->where_as("$this->tbl_as.custom_type", $this->db->esc($custom_type));
+    //     $this->db->where_as("$this->tbl_as.custom_type_sub", $this->db->esc($custom_type_sub));
+
+    //     //by Donny Dennison - 25 july 2022 11:40
+    //     //change point get rule for group chat community and upload video product
+    //     // $this->db->where_as("DATE($this->tbl_as.cdate)", $this->db->esc($dateCompare));
+    //     if($dateCompare != ""){
+
+    //         if($typeDateCompare == "check in"){
+    //             $this->db->where_as("MONTH($this->tbl_as.cdate)", $this->db->esc(date("m", strtotime($dateCompare))));
+    //             $this->db->where_as("YEAR($this->tbl_as.cdate)", $this->db->esc(date("Y", strtotime($dateCompare))));
+    //         }else{
+    //             $this->db->where_as("DATE($this->tbl_as.cdate)", $this->db->esc($dateCompare));
+    //         }
+
+    //     }
+
+    //     $d = $this->db->get_first('object', 0);
+    //     if (isset($d->total)) {
+    //         return $d->total;
+    //     }
+    //     return 0;
+    // }
+
+    public function getAll($nation_code, $page=1, $page_size=10, $sort_col="cdate", $sort_direction="DESC", $b_user_id)
+    {
+        $this->db->select_as("$this->tbl_as.id", "id", 0);
+        $this->db->select_as("$this->tbl_as.type", "type", 0);
+        $this->db->select_as("$this->tbl_as.cost_spt", "cost_spt", 0);
+        $this->db->select_as("$this->tbl_as.amount_get", "amount_get", 0);
+        $this->db->select_as($this->__decrypt("$this->tbl_as.telp"), "telp");
+        $this->db->select_as("$this->tbl_as.status", "status", 0);
+        $this->db->select_as("$this->tbl_as.cdate", "cdate", 0);
+
+        $this->db->from($this->tbl, $this->tbl_as);
+
+        $this->db->where_as("$this->tbl_as.nation_code", $this->db->esc($nation_code));
+        $this->db->where_as("$this->tbl_as.b_user_id", $this->db->esc($b_user_id));
+        $this->db->where_as("$this->tbl_as.is_active", $this->db->esc(1));
+
+        $this->db->order_by($sort_col, $sort_direction);
+        $this->db->page($page, $page_size);
+
+        return $this->db->get('object', 0);
+
+    }
+
+    public function getById($nation_code, $id, $b_user_id)
+    {
+        $this->db->select_as("$this->tbl_as.id", "id", 0);
+        $this->db->select_as("$this->tbl_as.type", "type", 0);
+        $this->db->select_as("$this->tbl_as.cost_spt", "cost_spt", 0);
+        $this->db->select_as("$this->tbl_as.amount_get", "amount_get", 0);
+        $this->db->select_as($this->__decrypt("$this->tbl_as.telp"), "telp");
+        $this->db->select_as("$this->tbl_as.status", "status", 0);
+        $this->db->select_as("$this->tbl_as.cdate", "cdate", 0);
+
+        $this->db->from($this->tbl, $this->tbl_as);
+
+        $this->db->where_as("$this->tbl_as.nation_code", $this->db->esc($nation_code));
+        $this->db->where_as("$this->tbl_as.id", $this->db->esc($id));
+        $this->db->where_as("$this->tbl_as.b_user_id", $this->db->esc($b_user_id));
+        $this->db->where_as("$this->tbl_as.is_active", $this->db->esc(1));
+
+        return $this->db->get_first('object', 0);
+
+    }
+
+    public function checkId($nation_code, $id)
+    {
+        $this->db->select_as("COUNT(*)", "jumlah");
+        $this->db->from($this->tbl, $this->tbl_as);
+        $this->db->where_as("$this->tbl_as.nation_code", $nation_code);
+        $this->db->where_as("$this->tbl_as.id", $this->db->esc($id));
+        $d = $this->db->get_first("object", 0);
+        if (isset($d->jumlah)) {
+            return $d->jumlah;
+        }
+        return 0;
+    }
+
+    public function sumPending($nation_code, $b_user_id)
+    {
+        $this->db->select_as("SUM($this->tbl_as.cost_spt)", "total", 0);
+        $this->db->from($this->tbl, $this->tbl_as);
+
+        $this->db->where_as("$this->tbl_as.nation_code", $this->db->esc($nation_code));
+        $this->db->where_as("$this->tbl_as.b_user_id", $this->db->esc($b_user_id));
+        $this->db->where_as("$this->tbl_as.is_active", $this->db->esc(1));
+        $this->db->where_as("$this->tbl_as.status", $this->db->esc("request exchange"), "OR", "=", 1, 0);
+        $this->db->where_as("$this->tbl_as.status", $this->db->esc("approved by admin"), "AND", "=", 0, 1);
+
+        $d = $this->db->get_first('object', 0);
+        if (isset($d->total)) {
+            return $d->total;
+        }
+        return 0;
+    }
+
+    public function countUnfinishedTransaction($nation_code, $b_user_id)
+    {
+        $this->db->select_as("COUNT($this->tbl_as.id)", "total", 0);
+        $this->db->from($this->tbl, $this->tbl_as);
+
+        $this->db->where_as("$this->tbl_as.nation_code", $this->db->esc($nation_code));
+        $this->db->where_as("$this->tbl_as.b_user_id", $this->db->esc($b_user_id));
+        $this->db->where_as("$this->tbl_as.is_active", $this->db->esc(1));
+        $this->db->where_as("$this->tbl_as.status", $this->db->esc("request exchange"), "OR", "=", 1, 0);
+        $this->db->where_as("$this->tbl_as.status", $this->db->esc("approved by admin"), "OR", "=", 0, 0);
+        $this->db->where_as("$this->tbl_as.status", $this->db->esc("wallet balance deducted"), "OR", "=", 0, 0);
+        $this->db->where_as("$this->tbl_as.status", $this->db->esc("top up problem"), "AND", "=", 0, 1);
+
+        $d = $this->db->get_first('object', 0);
+        if (isset($d->total)) {
+            return $d->total;
+        }
+        return 0;
+    }
+
+    public function getLastInserted($nation_code, $b_user_id)
+    {
+        $this->db->from($this->tbl, $this->tbl_as);
+
+        $this->db->where_as("$this->tbl_as.nation_code", $this->db->esc($nation_code));
+        $this->db->where_as("$this->tbl_as.b_user_id", $this->db->esc($b_user_id));
+        $this->db->where_as("$this->tbl_as.is_active", $this->db->esc(1));
+        $this->db->where_as("$this->tbl_as.status", $this->db->esc("success"));
+        $this->db->order_by("$this->tbl_as.cdate", "DESC");
+
+        return $this->db->get_first('object', 0);
+    }
+
+}
