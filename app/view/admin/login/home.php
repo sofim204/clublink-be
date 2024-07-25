@@ -1,37 +1,41 @@
 <style>
 body {
-	background-color: #4a392a;
+	background-color: #015C99;
 }
-	#login-container .login-title {
-		background-color: #fcfbfa;
-	}
-	.login-image{
-		text-align: center !important;
-    display: inline-block;
-	}
-	.block{
-		background-color: #eaedf1;
-	}
-	.form-bordered .form-group.form-actions {
-    background-color: #eaedf1;
-    border-bottom: none;
- }
- .btn-primary {
-    background-color: #f0863b;
-    border-color: #f0863b;
-    color: #ffffff;
- }
- .btn-primary:hover {
-    background-color: #f0560c;
-    border-color: #f0560c;
-    color: #ffffff;
-	}
-	.switch-primary input:checked + span {
-	    background-color: #f0863b;
-	 }
-	 .switch-primary span {
-	    border-color: #f0863b;
-	}
+#login-container .login-title {
+	background-color: #fcfbfa;
+}
+.login-image {
+	text-align: center !important;
+	display: inline-block;
+}
+.block {
+	background-color: #eaedf1;
+}
+.form-bordered .form-group.form-actions {
+	background-color: #eaedf1;
+	border-bottom: none;
+}
+.btn-primary {
+	background-color: #f0863b;
+	border-color: #f0863b;
+	color: #ffffff;
+}
+.btn-primary:hover {
+	background-color: #f0560c;
+	border-color: #f0560c;
+	color: #ffffff;
+}
+.switch-primary input:checked + span {
+	background-color: #f0863b;
+}
+.switch-primary span {
+	border-color: #f0863b;
+}
+
+.font-size-16px { font-size: 16px; }
+.bg-grey { background-color: #d3d3d3 }
+
 </style>
 <!-- Login Full Background -->
 <!-- For best results use an image with a resolution of 1280x1280 pixels (prefer a blurred image for smaller file size) -->
@@ -41,15 +45,7 @@ body {
 	<div id="login-container" class="animation-fadeIn">
 		<!-- Login Title -->
 		<div class="login-title text-center">
-			<?php if(!isset($this->skin_admin_logo)){ ?>
-			<h3><?=$this->site_name?></h3>
-			<?php }else{ ?>
-				<?php if(strlen($this->skin_admin_logo)<=4){ ?>
-				<h3><?=$this->site_name?></h3>
-				<?php } else{ ?>
-				<img src="<?=base_url($this->skin_admin_logo)?>" class="img-responsive" />
-				<?php }?>
-			<?php } ?>
+			<img src="<?=base_url($this->skin_admin_logo)?>" class="img-responsive" style="height: 60px;" />
 		</div>
 		<!-- END Login Title -->
 
@@ -61,27 +57,26 @@ body {
 				<div class="form-group">
 					<div class="col-xs-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="gi gi-user"></i></span>
-							<input type="text" id="iusername" name="username" class="form-control input-lg" placeholder="Username" />
+							<span class="input-group-addon bg-grey"><i class="gi gi-user"></i></span>
+							<input type="text" id="iusername" name="username" class="form-control input-lg font-size-16px" placeholder="Username" />
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-xs-12">
 						<div class="input-group">
-							<span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-							<input type="password" id="ipassword" name="password" class="form-control input-lg" placeholder="Password">
+							<span class="input-group-addon bg-grey"><i class="gi gi-asterisk"></i></span>
+							<input type="password" id="ipassword" name="password" class="form-control input-lg font-size-16px" placeholder="Password">
 						</div>
 					</div>
 				</div>
 				<div class="form-group form-actions">
 					<div class="col-xs-12">
 						<div class="btn-group pull-right">
-							<button type="submit" class="btn btn-sm btn-primary"><i id="bsubmit" class="fa fa-angle-right"></i> Login</button>
+							<button type="submit" class="btn btn-lg btn-info"><i id="bsubmit" class="fa fa-angle-right"></i> Login</button>
 						</div>
 					</div>
 				</div>
-
 			</form>
 			<!-- END Login Form -->
 
@@ -168,27 +163,3 @@ body {
 		<!-- END Login Block -->
 	</div>
 	<!-- END Login Container -->
-
-	<!-- Modal Terms -->
-	<div id="modal-terms" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Terms &amp; Conditions</h4>
-				</div>
-				<div class="modal-body">
-					<h4>Title</h4>
-					<p>Donec lacinia venenatis metus at bibendum? In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non. Suspendisse potenti. Pellentesque non accumsan orci. Praesent at lacinia dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					<p>Donec lacinia venenatis metus at bibendum? In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non. Suspendisse potenti. Pellentesque non accumsan orci. Praesent at lacinia dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					<h4>Title</h4>
-					<p>Donec lacinia venenatis metus at bibendum? In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non. Suspendisse potenti. Pellentesque non accumsan orci. Praesent at lacinia dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					<p>Donec lacinia venenatis metus at bibendum? In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non. Suspendisse potenti. Pellentesque non accumsan orci. Praesent at lacinia dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					<h4>Title</h4>
-					<p>Donec lacinia venenatis metus at bibendum? In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non. Suspendisse potenti. Pellentesque non accumsan orci. Praesent at lacinia dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					<p>Donec lacinia venenatis metus at bibendum? In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non. Suspendisse potenti. Pellentesque non accumsan orci. Praesent at lacinia dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- END Modal Terms -->
