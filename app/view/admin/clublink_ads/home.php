@@ -44,7 +44,7 @@
 	</div>
 	<ul class="breadcrumb breadcrumb-top">
 		<li>Admin</li>
-		<li>Sellon Advertisement</li>
+		<li>Clublink Advertisement</li>
 	</ul>
 	<!-- END Static Layout Header -->
 
@@ -52,7 +52,7 @@
 	<div class="block full">
 
 		<div class="block-title">
-			<h2><strong>Sellon Advertisement</strong></h2>
+			<h2><strong>Clublink Advertisement</strong></h2>
 		</div>
 
 		<div class="row">

@@ -151,8 +151,6 @@
 								<label class="" for="iitype_ads">Type</label>
 								<select id="iitype_ads" name="type_ads" class="form-control" required>
 									<option value="original" selected>original</option>
-									<option value="shop">shop</option>
-									<option value="product">product</option>
 									<option value="community">community</option>
 									<option value="polling">polling</option>
 									<option value="activity_dashboard">activity_dashboard</option>
@@ -168,22 +166,6 @@
 								<input class="form-control" id="input_url_webview" type="text" name="url_webview" value="" /> 
 							</div>
 						</div>
-						<fieldset>
-							<div class="form-group" id="banner_ads_detail" style="display: none;">
-								<!-- by Muhammad Sofi 3 January 2022 18:23 | add title for event banner  -->
-								<div class="col-md-12">
-									<label class="control-label" for="iejudul">Title *</label>
-									<input id="iejudul" type="text" name="judul" class="form-control" minlength="1" placeholder="Event Title" autocomplete="off" required />
-								</div>
-								<!-- by Muhammad Sofi 17 January 2022 11:06 | change the old model of edit event banner -->
-								<div class="col-md-12" id="textarea_editbanner">
-									<label class="control-label" for="ieteks">Description</label>
-									<div id="editor1">
-										<textarea id="ieteks" name="teks" class="form-control" rows="5"></textarea>
-									</div>
-								</div>
-							</div>
-						</fieldset>
 						<div class="form-group">
 							<div class="col-md-2">
 								<label class="" for="ipriority">Priority (1-100)</label>
@@ -267,8 +249,6 @@
 								<label class="" for="ieitype_ads">Type</label>
 								<select id="ieitype_ads" name="type_ads" class="form-control" required>
 									<option value="original">original</option>
-									<option value="shop">shop</option>
-									<option value="product">product</option>
 									<option value="community">community</option>
 									<option value="polling">polling</option>
 									<option value="activity_dashboard">activity_dashboard</option>

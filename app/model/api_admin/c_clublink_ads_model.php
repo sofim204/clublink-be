@@ -1,5 +1,5 @@
 <?php
-class C_Sellon_Ads_Model extends JI_Model {
+class C_Clublink_Ads_Model extends JI_Model {
 	var $tbl = 'c_sellon_ads';
 	var $tbl_as = 'ceb';
 
@@ -37,7 +37,8 @@ class C_Sellon_Ads_Model extends JI_Model {
 
 	public function getAll($nation_code, $page=0, $pagesize=10, $sortCol="kode", $sortDir="ASC", $keyword, $is_active=""){
 		$this->db->flushQuery();
-		$this->db->select_as("ROW_NUMBER() OVER (ORDER BY priority)", "no");
+		// $this->db->select_as("ROW_NUMBER() OVER (ORDER BY priority)", "no");
+		$this->db->select_as("$this->tbl_as.id", "no", 0);
 		$this->db->select_as("$this->tbl_as.id", "id", 0);
 		$this->db->select_as("$this->tbl_as.priority", "priority", 0);
 		$this->db->select_as("$this->tbl_as.img_thumbnail", "img_thumbnail", 0);

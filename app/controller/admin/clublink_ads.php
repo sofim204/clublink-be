@@ -1,11 +1,11 @@
 <?php
-class Sellon_Ads extends JI_Controller {
+class Clublink_Ads extends JI_Controller {
 	public function __construct(){
     	parent::__construct();
 		$this->setTheme('admin');
-		$this->current_parent = 'sellon_ads';
-		$this->current_page = 'sellon_ads';
-		$this->load("admin/g_sellon_ads_model", "sellon_ads_model");
+		$this->current_parent = 'clublink_ads';
+		$this->current_page = 'clublink_ads';
+		$this->load("admin/c_clublink_ads_model", "clublink_ads_model");
 	}
 
 	public function index() {
@@ -19,11 +19,11 @@ class Sellon_Ads extends JI_Controller {
 			die();
 		}
 		
-		$this->setTitle("Sellon Advertisement ".$this->site_suffix_admin);
+		$this->setTitle("Clublink Advertisement ".$this->site_suffix_admin);
 
-		$this->putThemeContent("sellon_ads/home_modal",$data);
-		$this->putThemeContent("sellon_ads/home",$data);
-		$this->putJsContent("sellon_ads/home_bottom",$data);
+		$this->putThemeContent("clublink_ads/home_modal",$data);
+		$this->putThemeContent("clublink_ads/home",$data);
+		$this->putJsContent("clublink_ads/home_bottom",$data);
 		$this->loadLayout('col-2-left',$data);
 		$this->render();
 	}
@@ -33,10 +33,10 @@ class Sellon_Ads extends JI_Controller {
 		$data = $this->__init();
 		$nation_code = "62"; 
 
-		$list_detail = $this->sellon_ads_model->detail($id, $nation_code);
+		$list_detail = $this->clublink_ads_model->detail($id, $nation_code);
 		$data['list_detail'] = $list_detail;
 
-		$this->putThemeContent("sellon_ads/sellon_ads_detail", $data);
+		$this->putThemeContent("clublink_ads/clublink_ads_detail", $data);
 		$this->loadLayout('col-2-left-eventbanner', $data);
 		$this->render();
 	}

@@ -1,5 +1,5 @@
 <?php
-class Sellon_Ads extends JI_Controller
+class Clublink_Ads extends JI_Controller
 {
     public $is_log = 1;
 
@@ -8,7 +8,7 @@ class Sellon_Ads extends JI_Controller
         parent::__construct();
         $this->lib("seme_log");
         $this->lib("seme_purifier");
-        $this->load("api_admin/c_sellon_ads_model", 'csa');
+        $this->load("api_admin/c_clublink_ads_model", 'ccam');
     }
 
     private function __uploadFoto($temp, $id="")
@@ -400,8 +400,8 @@ class Sellon_Ads extends JI_Controller
 
         $this->status = 200;
         $this->message = 'Success';
-        $dcount = $this->csa->countAll($nation_code, $keyword, $is_active);
-        $ddata = $this->csa->getAll($nation_code, $page, $pagesize, $sortCol, $sortDir, $keyword, $is_active);
+        $dcount = $this->ccam->countAll($nation_code, $keyword, $is_active);
+        $ddata = $this->ccam->getAll($nation_code, $page, $pagesize, $sortCol, $sortDir, $keyword, $is_active);
 
         foreach ($ddata as &$gd) {
             if (isset($gd->judul)) {
@@ -444,25 +444,6 @@ class Sellon_Ads extends JI_Controller
 
         $di = $_POST;
 
-        foreach ($di as $key=>&$val) {
-            if (is_string($val)) {
-                if ($key == 'teks') {
-                    // $val = $this->seme_purifier->richtext($val);
-                    $val = $this->__f($val);
-                } else {
-                    $val = $this->__f($val);
-                }
-            }
-        }
-
-        if (isset($di['judul'])) {
-            $di['judul'] = strip_tags($di['judul']);
-        }
-
-        if (isset($di['teks'])) {
-            $di['teks'] = strip_tags($di['teks']);
-        }
-
         //files upload
         $fi = $_FILES;
 
@@ -501,24 +482,24 @@ class Sellon_Ads extends JI_Controller
 
         $di["cdate"] = 'NOW()';
 
-        $this->csa->trans_start();
+        $this->ccam->trans_start();
 
         $di['nation_code'] = $nation_code;
-        $di['id'] = $this->csa->getLastId($nation_code);
-        $res = $this->csa->set($di);
+        $di['id'] = $this->ccam->getLastId($nation_code);
+        $res = $this->ccam->set($di);
         if ($res) {
-            $this->csa->trans_commit();
+            $this->ccam->trans_commit();
             $this->status = 200;
             $this->message = 'Success';
         } else {
-            $this->csa->trans_rollback();
+            $this->ccam->trans_rollback();
             $this->status = 900;
             $this->message = 'Cant add data to database, please try again later';
             if (file_exists(realpath($dataImg)) && is_file(realpath($dataImg))) {
                 unlink(realpath($dataImg));
             }
         }
-        $this->csa->trans_end();
+        $this->ccam->trans_end();
 
         $this->__json_out($data);
     }
@@ -538,7 +519,7 @@ class Sellon_Ads extends JI_Controller
         $pengguna = $d['sess']->admin;
         $nation_code = $pengguna->nation_code;
 
-        $detail = $this->csa->getById($nation_code, $id);
+        $detail = $this->ccam->getById($nation_code, $id);
         if (!isset($detail->id)) {
             $this->status = 455;
             $this->message = 'Data Event_Banner not found or Invalid ID';
@@ -547,7 +528,7 @@ class Sellon_Ads extends JI_Controller
 
         $this->status = 200;
         $this->message = 'Success';
-        $data = $this->csa->getById($nation_code, $id);
+        $data = $this->ccam->getById($nation_code, $id);
         if(isset($data->judul)){
 			$data->judul = html_entity_decode($this->__convertToEmoji($data->judul), ENT_QUOTES);
 		}
@@ -599,9 +580,9 @@ class Sellon_Ads extends JI_Controller
             $ext = pathinfo($path, PATHINFO_EXTENSION);
 
             //get last id
-            // $checkdata = $this->csa->getByIdThumbnail($nation_code, $id);
+            // $checkdata = $this->ccam->getByIdThumbnail($nation_code, $id);
             // by Muhammad Sofi 31 January 2022 14:14 | fix bug on edit data, image thumbnail is missing
-            $checkdata = $this->csa->getById($nation_code, $id);
+            $checkdata = $this->ccam->getById($nation_code, $id);
 
             // if($ext == "png" || $ext == "jpg") {
             if($checkdata->url_type == "image") {
@@ -777,7 +758,7 @@ class Sellon_Ads extends JI_Controller
                 }
             }
 
-            $res = $this->csa->update($nation_code, $id, $du); // by Muhammad Sofi 25 January 2022 9:43 | fix undefined checkdata
+            $res = $this->ccam->update($nation_code, $id, $du); // by Muhammad Sofi 25 January 2022 9:43 | fix undefined checkdata
             if ($res) {
                 $this->status = 200;
                 $this->message = 'Change data successfully';
@@ -812,9 +793,9 @@ class Sellon_Ads extends JI_Controller
         $pengguna = $d['sess']->admin;
         $nation_code = $pengguna->nation_code;
 
-        $dataurl = $this->csa->getById($nation_code, $id);
+        $dataurl = $this->ccam->getById($nation_code, $id);
         if (isset($dataurl->id)) {
-            $res = $this->csa->del($nation_code, $id);
+            $res = $this->ccam->del($nation_code, $id);
             if ($res) {
                 if (strlen($dataurl->url)>4 && strlen($dataurl->img_thumbnail)>4 && $dataurl->url != 'media/event_banner/default.png') {
                     if (file_exists(SENEROOT.$dataurl->url) && is_file(SENEROOT.$dataurl->url) && file_exists(SENEROOT.$dataurl->img_thumbnail) && is_file(SENEROOT.$dataurl->img_thumbnail)) {
@@ -864,7 +845,7 @@ class Sellon_Ads extends JI_Controller
 		$this->message = 'Failed updating thumbnail to database';
 
 		//get last id
-	    $imgThumbnail = $this->csa->getByIdThumbnail($pengguna->nation_code, $id);
+	    $imgThumbnail = $this->ccam->getByIdThumbnail($pengguna->nation_code, $id);
 		if(!isset($imgThumbnail->id)){
 			$this->status = 520;
 			$this->message = 'Invalid ID';
@@ -946,7 +927,7 @@ class Sellon_Ads extends JI_Controller
 			$du = array();
             $writethumb = $newname;
 			$du['img_thumbnail'] = $writethumb;
-			$this->csa->update($pengguna->nation_code, $imgThumbnail->id, $du);
+			$this->ccam->update($pengguna->nation_code, $imgThumbnail->id, $du);
 			$this->status = 200;
 			$this->message = 'Success';
 		}
@@ -964,7 +945,7 @@ class Sellon_Ads extends JI_Controller
         //standar input
         $search = $this->input->post("search");
 
-        $ddata = $this->csa->getCustomer($nation_code, $search, 1);
+        $ddata = $this->ccam->getCustomer($nation_code, $search, 1);
 
         $data = array();
 
@@ -986,7 +967,7 @@ class Sellon_Ads extends JI_Controller
         $search = $this->input->post("search");
         $seller_id = $this->input->post("seller_id");
 
-        $ddata = $this->csa->getProductDetail($nation_code, $search, 1, $seller_id);
+        $ddata = $this->ccam->getProductDetail($nation_code, $search, 1, $seller_id);
 
         $data = array();
 
@@ -1007,7 +988,7 @@ class Sellon_Ads extends JI_Controller
         //standar input
         $search = $this->input->post("search");
 
-        $ddata = $this->csa->getCommunity($nation_code, $search, 1);
+        $ddata = $this->ccam->getCommunity($nation_code, $search, 1);
 
         $data = array();
 

@@ -31,7 +31,7 @@ if(jQuery('#drTable').length>0){
 		"bProcessing"		: true,
 		"bServerSide"		: true,
 		"searching"			: false, // hide input search
-		"sAjaxSource"		: "<?=base_url("api_admin/sellon_ads/"); ?>",
+		"sAjaxSource"		: "<?=base_url("api_admin/clublink_ads/"); ?>",
 		"fnServerParams": function ( aoData ) {
 			aoData.push(
 				{ "name": "is_active", "value": $("#fl_is_active").val() }
@@ -52,7 +52,7 @@ if(jQuery('#drTable').length>0){
 					var currentRow = $(this).closest("tr");
 					var id = $('#drTable').DataTable().row(currentRow).data()[1]; <!-- to get data from specific column, change this "data()[id_column]" -->
 					ieid = id
-					var url = '<?=base_url("api_admin/sellon_ads/detail/")?>' + ieid;
+					var url = '<?=base_url("api_admin/clublink_ads/detail/")?>' + ieid;
 					$.get(url).done(function(response){
 						if(response.status==200){
 							var dta = response.data;
@@ -88,13 +88,6 @@ if(jQuery('#drTable').length>0){
 							
 							var type = dta.type_ads;
 							type_eventbanner = type;
-							
-							//if(dta.teks) {
-							//	$("#edit_webview_teks").show();
-							//	$("#edit_url_webview").val(dta.url_webview);
-							//} else {
-							//	$("#edit_webview_teks").hide();
-							//}
 
 						}else{
 							gritter('<h4>Failed</h4><p>Cannot fetch data, try again later</p>','info');
@@ -180,7 +173,7 @@ $("#aEditBannerThumbnail").on("click",function(e){
 $("#atestURL").on("click",function(e){
 	e.preventDefault();
 	$("#modal_options").modal("hide");
-	window.open('<?=base_url_admin('sellon_ads/getDetailAds/')?>'+ieid, '_blank');
+	window.open('<?=base_url_admin('clublink_ads/getDetailAds/')?>'+ieid, '_blank');
 });
 
 $("#atambah").on("click",function(e){
@@ -214,12 +207,11 @@ $("#iitype_ads").on("change", () => {
 });
 
 $("#ftambah").on("submit",function(e){
-	$('#ieteks').val(jqueryA('#ieteks').Editor('getText')); <!-- by Muhammad Sofi 3 January 2022 17:18 | add description for event banner -->
 	e.preventDefault();
 	NProgress.start();
 	var fd = new FormData($("#ftambah")[0]);
 	console.log(fd);
-	var url = '<?=base_url("api_admin/sellon_ads/tambah/")?>';
+	var url = '<?=base_url("api_admin/clublink_ads/tambah/")?>';
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -288,7 +280,7 @@ $("#ftedit").on("submit",function(e){
 	NProgress.start();
 	//gritter( '<h4>Processing</h4><p>Please wait while uploading image...</p>','info');
 	var fd = new FormData($("#ftedit")[0]);
-	var url = '<?=base_url("api_admin/sellon_ads/edit/")?>'+ieid;
+	var url = '<?=base_url("api_admin/clublink_ads/edit/")?>'+ieid;
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -311,7 +303,7 @@ $("#ftedit").on("submit",function(e){
 			$("#imageDisplay").attr("src", "");
 			drTable.ajax.reload();
 			//setTimeout(function(){
-			//	window.location = '<?php echo base_url_admin('sellon_ads'); ?>';
+			//	window.location = '<?php echo base_url_admin('clublink_ads'); ?>';
 			//}, 600);
 		}else{
 			//gritter('<h4>Failed</h4><p>'+respon.message+'</p>','danger');
@@ -345,7 +337,7 @@ $("#bhapus").on("click", (e) => {
 			reverseButtons: false
 		}).then((result) => {
 			if (result.isConfirmed) {
-				var url = '<?=base_url('api_admin/sellon_ads/hapus/')?>'+ieid;
+				var url = '<?=base_url('api_admin/clublink_ads/hapus/')?>'+ieid;
 				$.get(url).done(function(response){
 					$("#modal_edit").modal("hide");
 					if(response.status==200){
@@ -672,7 +664,7 @@ $("#ieimage_icon").change(function () {
 $("#fthumbnail_change").on("submit",function(e){
 	e.preventDefault();
 	NProgress.start();
-	var url = '<?=base_url("api_admin/sellon_ads/change_thumbnail/")?>'+ieid;
+	var url = '<?=base_url("api_admin/clublink_ads/change_thumbnail/")?>'+ieid;
 	$.ajax({
 		type: $(this).attr('method'),
 		url: url,
@@ -683,7 +675,7 @@ $("#fthumbnail_change").on("submit",function(e){
 			if(respon.status==200){
 				//gritter('<h4>Success</h4><p>Thumbnail changed successfully</p>','success');
 				//setTimeout(function(){
-				//	window.location = '<?php echo base_url_admin('sellon_ads'); ?>';
+				//	window.location = '<?php echo base_url_admin('clublink_ads'); ?>';
 				//},500);
 				Swal.fire({
 					title: 'Thumbnail changed successfully',
@@ -817,7 +809,7 @@ $("#select_seller_shop").select2({
 	width: "100%",
 	allowClear: true, <!-- add x button to clear value -->
 	ajax: { 
-		url: "<?= base_url('api_admin/sellon_ads/getCustomer') ?>",
+		url: "<?= base_url('api_admin/clublink_ads/getCustomer') ?>",
 		type: "post",
 		dataType: 'json',
 		delay: 250,
@@ -847,7 +839,7 @@ $("#select_seller_shop_product").select2({
 	width: "100%",
 	allowClear: true, <!-- add x button to clear value -->
 	ajax: { 
-		url: "<?= base_url('api_admin/sellon_ads/getCustomer') ?>",
+		url: "<?= base_url('api_admin/clublink_ads/getCustomer') ?>",
 		type: "post",
 		dataType: 'json',
 		delay: 250,
@@ -877,7 +869,7 @@ $("#select_product_detail").select2({
 	width: "100%",
 	allowClear: true, <!-- add x button to clear value -->
 	ajax: { 
-		url: "<?= base_url('api_admin/sellon_ads/getProductDetail') ?>",
+		url: "<?= base_url('api_admin/clublink_ads/getProductDetail') ?>",
 		type: "post",
 		dataType: 'json',
 		delay: 250,
@@ -908,7 +900,7 @@ $("#select_community").select2({
 	width: "150%",
 	allowClear: true, <!-- add x button to clear value -->
 	ajax: { 
-		url: "<?= base_url('api_admin/sellon_ads/getCommunity') ?>",
+		url: "<?= base_url('api_admin/clublink_ads/getCommunity') ?>",
 		type: "post",
 		dataType: 'json',
 		delay: 250,
@@ -985,7 +977,7 @@ $("#select_seller_shop_edit").select2({
 	width: "100%",
 	allowClear: true, <!-- add x button to clear value -->
 	ajax: { 
-		url: "<?= base_url('api_admin/sellon_ads/getCustomer') ?>",
+		url: "<?= base_url('api_admin/clublink_ads/getCustomer') ?>",
 		type: "post",
 		dataType: 'json',
 		delay: 250,
@@ -1016,7 +1008,7 @@ $("#select_seller_shop_product_edit").select2({
 	width: "100%",
 	allowClear: true, <!-- add x button to clear value -->
 	ajax: { 
-		url: "<?= base_url('api_admin/sellon_ads/getCustomer') ?>",
+		url: "<?= base_url('api_admin/clublink_ads/getCustomer') ?>",
 		type: "post",
 		dataType: 'json',
 		delay: 250,
@@ -1046,7 +1038,7 @@ $("#select_product_detail_edit").select2({
 	width: "100%",
 	allowClear: true, <!-- add x button to clear value -->
 	ajax: { 
-		url: "<?= base_url('api_admin/sellon_ads/getProductDetail') ?>",
+		url: "<?= base_url('api_admin/clublink_ads/getProductDetail') ?>",
 		type: "post",
 		dataType: 'json',
 		delay: 250,
@@ -1078,7 +1070,7 @@ $("#select_community_edit").select2({
 	width: "100%",
 	allowClear: true, <!-- add x button to clear value -->
 	ajax: { 
-		url: "<?= base_url('api_admin/sellon_ads/getCommunity') ?>",
+		url: "<?= base_url('api_admin/clublink_ads/getCommunity') ?>",
 		type: "post",
 		dataType: 'json',
 		delay: 250,

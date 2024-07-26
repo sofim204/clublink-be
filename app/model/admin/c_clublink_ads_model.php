@@ -1,5 +1,5 @@
 <?php
-class G_Sellon_Ads_Model extends JI_Model{
+class C_Clublink_Ads_Model extends JI_Model{
 	var $tbl = 'c_sellon_ads';
 	var $tbl_as = 'csa';
 
