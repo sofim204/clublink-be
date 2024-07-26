@@ -99,19 +99,6 @@
 			<h2><strong>Total Video</strong> </h2>
 		</div>
 		<div class="row" style="margin-left: 3px;">
-			<a href="<?= base_url_admin("ecommerce/produk"); ?>">
-				<div class="col-md-3" style="background-color: #FCFBFA; border: 0.5px solid #DADADA; padding-left: 0px; padding-right: 0px; margin-right: 0px; padding-top: 5px;">
-					<div class="col-md-2">
-						<img src="<?= base_url("media/icon/home_reported_product.png"); ?>" class="center" style="width: 32px; padding-top: 6px;">
-					</div>
-					<div class="col-md-10" style="padding-right: 0px;">
-						<label style="color: #000000; font-size: 16px;"> <span id="total_product_video"><img src="<?= base_url("media/icon/sellon_loading.gif"); ?>" class="center" style="width: 32px; padding-top: 6px;"></span> </label>
-						<br>
-						<label style="color: #8A8A8A; font-size: 12px;"> Product Video </label>
-					</div>
-				</div>
-			</a>
-
 			<a href="<?= base_url_admin("community/listing"); ?>">
 				<div class="col-md-3" style="background-color: #FCFBFA; border: 0.5px solid #DADADA; padding-left: 0px; padding-right: 0px; margin-right: 0px; padding-top: 5px;">
 					<div class="col-md-2">

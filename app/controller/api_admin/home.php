@@ -57,7 +57,6 @@ class Home extends JI_Controller{
 		// by Donny Dennison - 25 january 2021 15:51
 		// add need action column in dashboard
 		$data['reported_discussion_total'] = $this->cdm->countAllReport($nation_code);
-		$data['total_product_video'] = $this->cpm->countTotalVideoProduct($nation_code);
 		$data['total_community_video'] = $this->cclm->countTotalVideoCommunity($nation_code);
 		$data['total_reported_community_post'] = $this->cclm->countReportedPost("62", "");
 		
