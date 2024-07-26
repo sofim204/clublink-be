@@ -1,3 +1,11 @@
+<!-- initialize datepicker -->
+$('#from_date, #to_date').datepicker();
+$('#from_date, #to_date').datepicker('setDate', 'today').val("");
+
+$("#from_date, #to_date").change(function() {
+    $('.datepicker').hide(); <!-- hide datepicker after select a date -->
+});
+
 $(".arrow").on("click", function() {
     if ($(this).find('span').attr('data-active') == 'active') {
         $(this).find('span').addClass("fa-arrow-right tes").removeClass('fa-arrow-down tes');
@@ -89,5 +97,3 @@ $("#download-summary").on("click", function() {
         }
     });
 });
-
-<!-- $('#from_date, #to_date').datepicker('setDate', 'today'); -->

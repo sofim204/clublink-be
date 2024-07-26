@@ -51,8 +51,8 @@ class SENE_MySQLi_Engine
             
             //by Donny Dennison - 21 january 2022 22:44
             //change sql error and 404 not found to custom message
-            // $data['message'] = 'Failed to connect to Database: '.$this->__mysqli->connect_error;
-            $data['message'] = 'Please wait for a while';
+            $data['message'] = 'Failed to connect to Database: '.$this->__mysqli->connect_error;
+            // $data['message'] = 'Please wait for a while';
 
             $data['data'] = array();
             echo json_encode($data);

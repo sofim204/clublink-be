@@ -3,24 +3,7 @@
 	$welcome_message = '';
 	if(isset($sess->admin->nama)) if(strlen($sess->admin->nama)>1) $admin_name = $sess->admin->nama;
 	if(isset($sess->admin->welcome_message)) if(strlen($sess->admin->welcome_message)>1) $welcome_message = $sess->admin->welcome_message;
-
 ?>
-<style>
-	#custom_from_date_container, 
-	#custom_to_date_container {
-    	position: absolute;
-		width: 185px;
-		height: auto;
-		background-color: #fafafa;
-		border: 1px solid #d3d6d8;
-		border-radius: 5px;  
-		padding: 30px;
-		margin: 20px;
-		z-index: 199;
-		display: none;
-	}
-
-</style>
 <div id="page-content">
 <input type="hidden" id="check_user_role" value="<?= $user_role; ?>">
 

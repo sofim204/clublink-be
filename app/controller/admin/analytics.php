@@ -10,11 +10,7 @@ class Analytics extends JI_Controller
         $this->current_page = 'analytics';
 
         $this->load("api_admin/g_sellon_analytics", 'gsa');
-        $this->load("api_admin/b_kategori_automotive_model", 'bka');
-        $this->load("api_admin/c_produk_model", 'cp');
-        $this->load("api_admin/b_user_model", 'bum');
         $this->load("api_admin/c_community_category_model", 'cccm');
-        $this->load("api_admin/c_event_banner_model", 'ebm');
         $this->load("api_admin/i_group_category_model", 'igcm');
     }
 
@@ -46,28 +42,7 @@ class Analytics extends JI_Controller
                 $type = ucwords($row->type);
 
                 if (!empty($row->category) || $row->category !== '') {
-                    if (!empty($row->corner) && $row->corner == 'Buy&Sell') {
-                        if (
-                            $row->type == 'Car(View,Brand)' ||
-                            $row->type == 'Cars(Register)' ||
-                            $row->type == 'MeetUp(View)' ||
-                            $row->type == 'MeetUp(Register)' ||
-                            $row->type == 'MotorCycle(Register)' ||
-                            $row->type == 'Free Product(View)' ||
-                            $row->type == 'Free Product' ||
-                            $row->type == 'Motorcycle(View)' ||
-                            $row->type == "MotorCycle(View,Brand)" ||
-                            $row->type == 'Protection(SG)(View)' ||
-                            $row->type == 'My Likes'
-                        ) {
-                            $cat_name = $this->bka->getById(62, $row->category);
-                            $row->category = $cat_name->nama;
-                        } elseif ($row->type == 'Video(View)' && $row->type != "") {
-                            $cat_name = $this->bka->getById(62, $row->category);
-
-                            $row->category = $cat_name->nama;
-                        }
-                    } elseif (!empty($row->corner) && $row->corner == 'Community') {
+                    if (!empty($row->corner) && $row->corner == 'Community') {
                         if ($row->type == 'Video(View)' || $row->type == 'Community(View)') {
                             $comm_cat = $this->cccm->getById(62, $row->category);
                             $row->category = $comm_cat->nama;
@@ -154,34 +129,42 @@ class Analytics extends JI_Controller
                     // echo json_encode($sorted[$key][$types]);die();
                 }
             }
+
+            $data['gsa_list'] = $sorted;
+
+            // sum all count
+            $data['totalView'] = $this->gsa->countBy([], "", $fromDate, $toDate);
+            $data['videoView'] = $this->gsa->CountBy(["Community"], "Video", $fromDate, $toDate);
+
+            // sum view
+            $data['totalViewHome'] = $this->gsa->CountBy(["Home"], "", $fromDate, $toDate);
+            $data['totalViewMy'] = $this->gsa->CountBy(["My"], "", $fromDate, $toDate);
+            $data['totalViewChat'] = $this->gsa->CountBy(["Chat"], "", $fromDate, $toDate);
+            $data['totalViewWallet'] = $this->gsa->CountBy(["Wallet"], "", $fromDate, $toDate);
+            $data['totalViewGNB'] = $this->gsa->CountBy(["GNB"], "", $fromDate, $toDate);
+            $data['totalViewMainBanner'] = $this->gsa->CountBy(["mainBanner"], "", $fromDate, $toDate);
+            $data['totalViewSMB'] = $this->gsa->CountBy(["SideMenuBar"], "", $fromDate, $toDate);
+            $data['totalViewClub'] = $this->gsa->CountBy(["Club"], "", $fromDate, $toDate);
+            $data['subtotalViewComm'] = $this->gsa->countBy(["Community"], "", $fromDate, $toDate);
+            $data['subtotalViewCommVideo'] = $this->gsa->countBy(["Community"], "Video", $fromDate, $toDate);
+
+            $data['chatCommCount'] = $this->gsa->countBy(["Chat"], "community", $fromDate, $toDate);
+        } else {
+            $data['gsa_list'] = [];
+            $data['totalView'] = [];
+            $data['videoView'] = [];
+            $data['totalViewHome'] = [];
+            $data['totalViewMy'] = [];
+            $data['totalViewChat'] = [];
+            $data['totalViewWallet'] = [];
+            $data['totalViewGNB'] = [];
+            $data['totalViewMainBanner'] = [];
+            $data['totalViewSMB'] = [];
+            $data['totalViewClub'] = [];
+            $data['subtotalViewComm'] = [];
+            $data['subtotalViewCommVideo'] = [];
+            $data['chatCommCount'] = [];
         }
-
-        // echo json_encode($sorted);die();
-        $data['gsa_list'] = $sorted;
-
-        // sum all count
-        $data['totalView'] = $this->gsa->countBy([], "", $fromDate, $toDate);
-        $data['videoView'] = $this->gsa->CountBy(["Community", "Buy&Sell"], "Video", $fromDate, $toDate);
-
-        // sum view
-        $data['totalViewHome'] = $this->gsa->CountBy(["Home"], "", $fromDate, $toDate);
-        $data['totalViewMy'] = $this->gsa->CountBy(["My"], "", $fromDate, $toDate);
-        $data['totalViewChat'] = $this->gsa->CountBy(["Chat"], "", $fromDate, $toDate);
-        $data['totalViewWallet'] = $this->gsa->CountBy(["Wallet"], "", $fromDate, $toDate);
-        $data['totalViewGNB'] = $this->gsa->CountBy(["GNB"], "", $fromDate, $toDate);
-        $data['totalViewMainBanner'] = $this->gsa->CountBy(["mainBanner"], "", $fromDate, $toDate);
-        $data['totalViewSMB'] = $this->gsa->CountBy(["SideMenuBar"], "", $fromDate, $toDate);
-        $data['totalViewClub'] = $this->gsa->CountBy(["Club"], "", $fromDate, $toDate);
-        $data['subtotalView'] = $this->gsa->countBy(["Buy&Sell"], "", $fromDate, $toDate);
-        $data['subtotalViewVideo'] = $this->gsa->countBy(["Buy&Sell"], "Video", $fromDate, $toDate);
-        $data['subtotalViewComm'] = $this->gsa->countBy(["Community"], "", $fromDate, $toDate);
-        $data['subtotalViewCommVideo'] = $this->gsa->countBy(["Community"], "Video", $fromDate, $toDate);
-
-        $data['chatBnSellCount'] = $this->gsa->countBy(["Chat"], "buyandsell", $fromDate, $toDate);
-        $data['chatCommCount'] = $this->gsa->countBy(["Chat"], "community", $fromDate, $toDate);
-        $data['chatPrivate'] = $this->gsa->countBy(["Chat"], "private", $fromDate, $toDate);
-        $data['chatBarter'] = $this->gsa->countBy(["Chat"], "barter", $fromDate, $toDate);
-        $data['chatOffer'] = $this->gsa->countBy(["Chat"], "offer", $fromDate, $toDate);
 
         $this->setTitle("Analytics " . $this->site_suffix_admin);
         $this->putThemeContent("analytics/index", $data);

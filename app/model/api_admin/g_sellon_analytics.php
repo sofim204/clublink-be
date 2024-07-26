@@ -71,6 +71,8 @@ class G_Sellon_Analytics extends SENE_Model
             $this->db->where_as("DATE($this->tbl.cdate)", "DATE('$toDate')", 'AND', '<=');
         }
 
+        $this->db->where("$this->tbl.corner", 'Buy&Sell', "AND", "<>");
+
         $this->db->group_by($groupBy);
         $this->db->order_by("$this->tbl.corner_seq", "ASC");
 

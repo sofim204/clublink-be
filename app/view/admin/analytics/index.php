@@ -50,10 +50,10 @@
         cursor: pointer;
     }
 
-    tbody tr:hover {
+    /* tbody tr:hover {
         background-color: #f2eeeb;
         z-index: 22;
-    }
+    } */
 
     td:not(.first):hover::after,
     th:hover::after {
@@ -84,7 +84,7 @@
                         <select id="corner" class="form-control">
                             <option value="">--------PILIH-----------</option>
                             <?php
-                            $data = ["Home", "Buy&Sell", "Community", "My", "MainBanner", "SideMenuBar", "Chat", "GNB", "Wallet"];
+                            $data = ["Home", "Community", "My", "MainBanner", "SideMenuBar", "Chat", "GNB", "Wallet"];
                             sort($data);
                             foreach ($data as $val) {
                                 echo '<option value="' . $val . '" > ' . ucwords($val) . ' ';
@@ -193,11 +193,7 @@
                                         <?php
                                         if ($key == "Home") {
                                             echo " - View : $totalViewHome";
-                                        } elseif ($key == "Buy&Sell") {
-                                            echo "
-                                                - View : $subtotalView <br>
-                                                - Video: $subtotalViewVideo";
-                                        } elseif ($key == 'Community') {
+                                        }elseif ($key == 'Community') {
                                             echo "
                                                 - View : $subtotalViewComm <br>
                                                 - Video : $subtotalViewCommVideo

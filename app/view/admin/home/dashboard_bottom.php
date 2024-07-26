@@ -7,7 +7,7 @@ $(document).ready(function(){
 
 <!-- initialize datepicker -->
 $('#from_cdate_daily_track, #to_cdate_daily_track').datepicker();
-  $('#from_cdate_daily_track, #to_cdate_daily_track').datepicker('setDate', 'today').val("");
+$('#from_cdate_daily_track, #to_cdate_daily_track').datepicker('setDate', 'today').val("");
 
 $("#from_cdate_daily_track, #to_cdate_daily_track").change(function(){
   $('.datepicker').hide(); <!-- hide datepicker after select a date -->
