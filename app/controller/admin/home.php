@@ -24,7 +24,7 @@ class Home extends JI_Controller
         $data['count_total_club'] = $this->igm->countTotalClub();
         $data['count_total_club_post'] = $this->igpm->countTotalClubPost();
         
-        $this->putJsFooter($this->skins->admin.'js/helpers/gmaps.min', 0);
+
         $this->putJsFooter($this->skins->admin.'js/pages/index');
 
         $this->putThemeContent("home/dashboard", $data);
