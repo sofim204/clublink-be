@@ -3738,6 +3738,10 @@ p, .table, .alert, .carousel {
     background-color: #f9f9f9!important;
 }
 
+.themed-background-clublink {
+    background-color: #015C99 !important;
+}
+
 /*
 =================================================================
 (#m09res) RESPONSIVE

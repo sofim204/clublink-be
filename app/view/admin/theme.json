@@ -2,7 +2,7 @@
 	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/admin/css/bootstrap.min.css\" \/>",
 	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/admin/css/plugins.css\" \/>",
 	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/admin/css/main.css\" \/>",
-	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/admin/css/themes/autumn.css\" \/>",
+	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/admin/css/themes/emerald.css\" \/>",
 	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/admin/css/themes.css\" \/>",
 	"<link rel=\"stylesheet\" href=\"{{base_url}}skin/admin/css/sweetalert2.min.css\" \/>",
 	"<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css\" \/>"
