@@ -5,22 +5,6 @@
 		padding: 2px;
 		margin-right: 5px;
 	}
-	/* table#drTable tr:hover {
-		background-color: #EFBF65;
-	}
-	table#drTable tbody td {
-		word-break: break-word;
-		vertical-align: top;
-	} */
-	tr:hover {background-color: #e3d1af;}
-	tr.selected  {
-		background-color: #EFBF65;
-		/* color: #ffffff; */
-	}
-	.swal2-popup {
-		font-size: 1.6rem !important;
-		font-family: Georgia, serif;
-	}
 </style>
 <div id="page-content">
 	<!-- Static Layout Header -->
@@ -68,22 +52,6 @@
                     <input id="to_date" type="text" class="form-control input-datepicker" data-date-format="yyyy-mm-dd" value="<?= $to_date; ?>" placeholder="To date" autocomplete="off"/>
                 </div>
             </div>
-			<!-- <div class="col-md-2">
-				<label for="fl_is_confirmed">Email Status</label>
-				<select id="fl_is_confirmed" class="form-control">
-					<option value="">--view all--</option>
-					<option value="1">Verified</option>
-					<option value="0">Unverified</option>
-				</select>
-			</div>
-			<div class="col-md-2">
-				<label for="fl_pelanggan_status">Status</label>
-				<select id="fl_pelanggan_status" class="form-control">
-					<option value="">--view all--</option>
-					<option value="active">Active</option>
-					<option value="inactive">Inactive</option>
-				</select>
-			</div> -->
 			<div class="col-md-2">
 				<label for="fl_button">&nbsp;</label>
 				<button id="fl_reset" type="button" class="btn btn-warning btn-block">Reset</button>
@@ -108,8 +76,6 @@
 						<th>TOTAL USERS</th>
 						<th>(new)</th>
 						<th>TOTAL LIST(COMMUNITY)</th>
-						<th>(new)</th>
-						<th>TOTAL LIST(ITEM)</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -14,6 +14,14 @@ function gritter(pesan,jenis='info'){
 
 App.datatables();
 
+<!-- initialize datepicker -->
+$('#from_date, #to_date').datepicker();
+$('#from_date, #to_date').datepicker('setDate', 'today').val("");
+
+$("#from_date, #to_date").change(function(){
+	$('.datepicker').hide(); <!-- hide datepicker after select a date -->
+});
+
 if(jQuery('#drTable').length>0){
 	drTable = jQuery('#drTable')
 	.on('preXhr.dt', function ( e, settings, data ){

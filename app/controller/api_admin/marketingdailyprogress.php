@@ -2,10 +2,6 @@
 
 class Marketingdailyprogress extends JI_Controller
 {
-    // public $media_user = '';
-    // public $kode_pattern = '%010d';
-    // public $email_send = 1;
-
     public function __construct()
     {
         parent::__construct();
@@ -64,48 +60,6 @@ class Marketingdailyprogress extends JI_Controller
         if (strtolower($sortDir) != "desc") {
             $sortDir = "ASC";
         }
-        // $tbl_as = $this->gmdpm->getTblAlias();
-
-        // switch ($iSortCol_0) {
-        //     case 0:
-        //         $sortCol = "$tbl_as.cdate";
-        //         break;
-        //     case 1:
-        //         $sortCol = "$tbl_as.mobile_type";
-        //         break;
-        //     case 2:
-        //         $sortCol = "$tbl_as.visit";
-        //         break;
-        //     case 3:
-        //         $sortCol = "$tbl_as.visit_total";
-        //         break;
-        //     case 4:
-        //         $sortCol = "$tbl_as.signuporlogin";
-        //         break;
-        //     case 5:
-        //         $sortCol = "$tbl_as.signuporlogin_total";
-        //         break;
-        //     case 6:
-        //         $sortCol = "$tbl_as.user";
-        //         break;
-        //     case 7:
-        //         $sortCol = "$tbl_as.user_total";
-        //         break;
-        //     case 8:
-        //         $sortCol = "$tbl_as.community";
-        //         break;
-        //     case 9:
-        //         $sortCol = "$tbl_as.community_total";
-        //         break;
-        //     case 10:
-        //         $sortCol = "$tbl_as.product";
-        //         break;
-        //     case 11:
-        //         $sortCol = "$tbl_as.product_total";
-        //         break;
-        //     default:
-        //         $sortCol = "$tbl_as.cdate";
-        // }
 
         if (empty($draw)) {
             $draw = 0;
@@ -117,34 +71,6 @@ class Marketingdailyprogress extends JI_Controller
             $page=0;
         }
         $keyword = $sSearch;
-
-        //advanced filter
-        // $is_published = "";
-        // $is_active = "";
-        // $pelanggan_status = $this->input->post("pelanggan_status");
-        // switch ($pelanggan_status) {
-        //     case 'active':
-        //         $is_published=1;
-        //         $is_active=1;
-        //         break;
-        //     case 'inactive':
-        //         $is_published = "";
-        //         $is_active=0;
-        //         break;
-        //     default:
-        //         $is_published = "";
-        //         $is_active = "";
-        //         break;
-        // }
-        // $is_confirmed = $this->input->post("is_confirmed");
-        // if (strlen($is_confirmed)>0) {
-        //     $is_confirmed = intval($is_confirmed);
-        //     if (!empty($is_confirmed)) {
-        //         $is_confirmed=1;
-        //     }
-        // } else {
-        //     $is_confirmed="";
-        // }
 
         if (strlen($from_date)==10) {
             $from_date = date("Y-m-d", strtotime($from_date));
@@ -180,8 +106,6 @@ class Marketingdailyprogress extends JI_Controller
                 "user_total" => '',
                 "community" => '',
                 "community_total" => '',
-                "product" => '',
-                "product_total" => ''
             );
 
             //android
@@ -196,10 +120,7 @@ class Marketingdailyprogress extends JI_Controller
                 "user_total" => $totalUserCommunityProduct->sum_signup,
                 "community" => $gd->community_post,
                 "community_total" => $totalUserCommunityProduct->sum_community_post,
-                "product" => $gd->product_post,
-                "product_total" => $totalUserCommunityProduct->sum_product_post
             );
-
         }
 
         $this->__jsonDataTable($ddata, $dcount);
