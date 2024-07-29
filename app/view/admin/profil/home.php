@@ -72,7 +72,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-md-3">
-				<img src="<?=$admin_foto?>" style="width: 100%;" class="img-responsive" />
+				<img src="<?=$admin_foto?>" alt="avatar" onerror="this.onerror=null;this.src='<?=base_url()?>media/pengguna/default.png'" />
 			</div>
 			<div class="col-md-3">&nbsp;</div>
 			<div class="col-md-6">
