@@ -899,8 +899,8 @@ function seme_error_handling($errno, $errstr, $error_file,$error_line,$error_con
 
 		//by Donny Dennison - 28 january 2022 13:03
 		//disable error mysql
-		// print 'Please wait for a while';
-		// die();
+		print 'Please wait for a while';
+		die();
 
   	echo '<div style="padding: 10px; background-color: #ededed;">';
   	echo '<h2 style="color: #ef0000;">Error</h2>';
