@@ -36,7 +36,6 @@ function dashboardInit() {
       setTimeout(function(){
         <!-- by Donny Dennison - 25 january 2021 15:51 -->
         <!-- add need action column in dashboard -->
-        $("#reported_discussion_total").html(response.data.reported_discussion_total.toLocaleString());
         $("#total_community_video").html(response.data.total_community_video.toLocaleString());
         $("#total_reported_community_post").html(response.data.total_reported_community_post.toLocaleString());
 
