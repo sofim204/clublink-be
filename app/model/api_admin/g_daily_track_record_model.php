@@ -126,7 +126,6 @@ class G_Daily_Track_Record_Model extends JI_Model {
 		// $this->db->select_as("$this->tbl_as.signup", "signup", 0);
 		$this->db->select_as("($this->tbl_as.signup_android+$this->tbl_as.signup_ios)", "signup", 0);
 		$this->db->select_as("$this->tbl_as.community_post", "community_post", 0);
-		$this->db->select_as("$this->tbl_as.product_post", "product_post", 0);
 		$this->db->select_as("$this->tbl_as.club_create", "club_create", 0);
 		// $this->db->select_as("$this->tbl_as.visit", "visit", 0);
 		$this->db->select_as("($this->tbl_as.visit_android+$this->tbl_as.visit_ios)", "visit", 0);
@@ -135,7 +134,6 @@ class G_Daily_Track_Record_Model extends JI_Model {
 		$this->db->select_as("$this->tbl_as.visit_android", "visit_android", 0);
 		$this->db->select_as("$this->tbl_as.visit_ios", "visit_ios", 0);
 		$this->db->select_as("$this->tbl_as.community_video", "community_video", 0);
-		$this->db->select_as("$this->tbl_as.product_video", "product_video", 0);
 		$this->db->select_as("$this->tbl_as.club_post", "club_post", 0);
 		$this->db->select_as("$this->tbl_as.temp_android", "temp_android", 0);
 

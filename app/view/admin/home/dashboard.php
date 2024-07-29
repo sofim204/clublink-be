@@ -146,7 +146,6 @@
 							<!-- <th>Signup Android</th>
 							<th>Signup Ios</th> -->
 							<th>Community (Video)</th>
-							<th>Product (Video)</th>
 							<th>Club (Post)</th>
 							<!-- <th>Visit (ADR / IOS)</th> -->
 							<th>Visit</th>

@@ -3,24 +3,9 @@ class Home extends JI_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		//$this->setTheme('frontx');
-		$this->load("api_admin/d_order_model",'dom');
-		$this->load("api_admin/d_order_detail_model",'dodm');
-		$this->load("api_admin/d_order_detail_item_model",'dodim');
-
-		// by Donny Dennison - 25 january 2021 15:51
-		// add need action column in dashboard
-		$this->load("api_admin/c_produk_laporan_model", 'cplm');
-		$this->load("api_admin/c_discuss_model","cdm");
-
-		$this->load("api_admin/c_produk_model","cpm");
-		$this->load("api_admin/c_community_list_model","cclm");
-
-		$this->load("api_admin/b_user_offer_sales_admin_model", "buosam");
+		$this->load("api_admin/c_community_list_model", "cclm");
 		$this->load("api_admin/g_daily_track_record_model", "gdtrm");
-
 		$this->load("api_admin/b_user_model", "bum");
-
 	}
 	public function index(){
 		$s = $this->__init();
@@ -32,27 +17,6 @@ class Home extends JI_Controller{
 			die();
 		}
 		$nation_code = $s['sess']->admin->nation_code;
-
-		$year = date("Y");
-		$today = date("Y-m-d");
-		$cdate_start = $this->input->post('start_date');
-		$cdate_end = $this->input->post('end_date');
-		/*var_dump($cdate_start); die();*/
-		if(empty($cdate_start) && empty($cdate_end))
-		{	
-			$mulai = date("Y-m-")."01";
-			$akhir = date("Y-m-t");
-
-			$orders = $this->dodm->getPerMonth($nation_code,$year);
-
-		}
-		else
-		{
-			$mulai = $cdate_start;
-			$akhir = $cdate_end;
-
-			$orders = $this->dodm->getPerMonth($nation_code,$year);
-		}
 
 		// by Donny Dennison - 25 january 2021 15:51
 		// add need action column in dashboard
@@ -68,7 +32,7 @@ class Home extends JI_Controller{
 		$this->__json_out($data);
 	}
 
-	public function daily_track_record(){
+	public function daily_track_record() {
 		$d = $this->__init();
 		$data = array();
 		if(!$this->admin_login){
@@ -93,9 +57,6 @@ class Home extends JI_Controller{
 
         $from_date = $this->input->post("from_date");
         $to_date = $this->input->post("to_date");
-
-		// $year = date('Y', strtotime($year_full));
-		// $month = date('m', strtotime($year_full));
 
 		$sortCol = "cdate";
 		$sortDir = strtoupper($sSortDir_0);
@@ -132,12 +93,9 @@ class Home extends JI_Controller{
 				$sortCol = "community_post";
 				break;
 			case 4:
-				$sortCol = "product_post";
-				break;
-			case 5:
 				$sortCol = "club_create";
 				break;
-			case 6:
+			case 5:
 				$sortCol = "visit";
 				break;
 			default:
@@ -177,9 +135,6 @@ class Home extends JI_Controller{
 					$gd->community_post = $gd->community_post + 2000;
 					$gd->community_video = $gd->community_video + 1500;
 
-					$gd->product_post = $gd->product_post + 1000;
-					$gd->product_video = $gd->product_video + 110;
-
 					$gd->visit = $gd->visit + 20000;
 					$gd->visit_android = $gd->visit_android + 18000;
 					$gd->visit_ios = $gd->visit_ios + 2000;
@@ -191,9 +146,6 @@ class Home extends JI_Controller{
 
 					$gd->community_post = $gd->community_post + 800;
 					$gd->community_video = $gd->community_video + 750;
-
-					$gd->product_post = $gd->product_post + 171;
-					$gd->product_video = $gd->product_video + 13;
 
 					$gd->visit = $gd->visit + 2000;
 					$gd->visit_android = $gd->visit_android + 1700;
@@ -209,19 +161,10 @@ class Home extends JI_Controller{
 			if(isset($gd->community_post)) {
 				$gd->community_post = $gd->community_post.' ('. $gd->community_video.')';
 			}
-			
-			if(isset($gd->product_post)) {
-				$gd->product_post = $gd->product_post.' ('. $gd->product_video.')';
-			}
 
 			if(isset($gd->club_create)) {
 				$gd->club_create = $gd->club_create.' ('. $gd->club_post.')';
 			}
-
-			// if(isset($gd->visit)) {
-			// 	$gd->visit = $gd->visit.' ('.$gd->visit_android.' / '. $gd->visit_ios.')';
-			// }
-
 		}
 		//sleep(3);
 		$another = array();
